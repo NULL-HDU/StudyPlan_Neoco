@@ -1,11 +1,11 @@
 ## 学习目标
 
-### 前端技术
+### 前端技术(8/10)
 - Canvas [基础]
 - Canvas 游戏引擎 pixi.js [基础]
 - just-spaceships 源码［理解］
 
-### UI设计
+### UI设计(2/10)
 - Photoshop 基础使用
 - Sketch 进阶技巧
 
