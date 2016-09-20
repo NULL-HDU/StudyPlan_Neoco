@@ -30,8 +30,8 @@ var stage = new Container(),
 document.body.appendChild(renderer.view);
 
 loader
-  .add("img/badguy.png")
-  .add("img/tileset.png")
+  .add("images/cat.png")
+  .add("images/tileset.png")
   .on("progress", loadProgressHandler)
   .load(setup);
 
@@ -41,13 +41,13 @@ function loadProgressHandler(loader, resource) {
 }
 
 function setup(){
-  var cat = new Sprite(resources["img/badguy.png"].texture);
+  var cat = new Sprite(resources["images/cat.png"].texture);
   cat.position.set(globleX / 2, globleY /2);
   cat.pivot.set(100, 100);
   cat.rotation = 0;
   stage.addChild(cat);
 
-  var texture = TextureCache["img/tileset.png"];
+  var texture = TextureCache["images/tileset.png"];
   var rectangle = new PIXI.Rectangle(96, 64,32, 32);
   texture.frame = rectangle;
   var rocket = new Sprite(texture);
