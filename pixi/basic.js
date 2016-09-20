@@ -1,20 +1,3 @@
-// var stage = new PIXI.Container(),
-//   renderer = PIXI.autoDetectRenderer(256, 256);
-// document.body.appendChild(renderer.view);
-// 
-// PIXI.loader
-//   .add("img/badguy.png")
-//   .load(setup);
-// 
-// function setup() {
-//   var cat = new PIXI.Sprite( PIXI.loader.resources["img/badguy.png"].texture);
-// 
-//   stage.addChild(cat);
-// 
-//   renderer.render(stage);
-// }
-//
-// pixi.min.js
 var Container = PIXI.Container,
   autoDetectRenderer = PIXI.autoDetectRenderer,
   loader = PIXI.loader,
@@ -26,7 +9,7 @@ var globleX = window.innerWidth - 2,
   globleY = window.innerHeight - 2;
 
 var stage = new Container(),
-  renderer = autoDetectRenderer(window.innerWidth - 2, window.innerHeight - 2);
+  renderer = autoDetectRenderer(globleX, globleY);
 document.body.appendChild(renderer.view);
 
 loader
