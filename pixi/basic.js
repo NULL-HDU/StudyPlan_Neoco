@@ -27,6 +27,8 @@ function loadProgressHandler(loader, resource) {
   console.log("Progress:" + loader.progress + "%");
 }
 
+var explorer;
+
 function setup(){
   // var cat = new Sprite(resources["images/cat.png"].texture);
   // cat.position.set(globleX / 2, globleY /2);
@@ -44,9 +46,9 @@ function setup(){
   var id = PIXI.loader.resources["images/treasureHunter.json"].textures;
   var dungeon = new Sprite(id["dungeon.png"]),
     treasure = new Sprite(id["treasure.png"]),
-    explorer = new Sprite(id["explorer.png"]),
     door = new Sprite(id["door.png"]); 
 
+  explorer = new Sprite(id["explorer.png"]);
   door.position.set(32, 0);
   explorer.x = 48;
   explorer.y = dungeon.height / 2 - explorer.height / 2;
@@ -54,9 +56,9 @@ function setup(){
   treasure.y = dungeon.height / 2 - treasure.height / 2;
 
   stage.addChild(dungeon);
-  stage.addChild(explorer);
   stage.addChild(treasure);
   stage.addChild(door);
+  stage.addChild(explorer);
 
   var numberOfBlobs = 6,
     spacing = 48,
@@ -79,6 +81,18 @@ function setup(){
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  gameLoop();
+}
+
+function gameLoop() {
+  
+  requestAnimationFrame(gameLoop);
+
+  explorer.x += 1;
+
+  if (explorer.x >= 500) {
+    explorer.x = 500;
+  }
+
   renderer.render(stage);
-  console.log("setup");
 }
