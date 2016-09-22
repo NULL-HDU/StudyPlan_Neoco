@@ -27,7 +27,7 @@ function loadProgressHandler(loader, resource) {
   console.log("Progress:" + loader.progress + "%");
 }
 
-var explorer;
+var explorer, state;
 
 function setup(){
   // var cat = new Sprite(resources["images/cat.png"].texture);
@@ -58,7 +58,6 @@ function setup(){
   stage.addChild(dungeon);
   stage.addChild(treasure);
   stage.addChild(door);
-  stage.addChild(explorer);
 
   var numberOfBlobs = 6,
     spacing = 48,
@@ -81,18 +80,116 @@ function setup(){
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  stage.addChild(explorer);
+
+  var left = keyboard(37),
+    up = keyboard(38),
+    right = keyboard(39),
+    down = keyboard(40);
+    explorer.vx = 0;
+    explorer.vy = 0;
+
+  up.press = function() {
+    explorer.vy = -5;
+  }
+  up.release = function() {
+    if (down.isUp) {
+      explorer.vy = 0;
+    } else {
+      down.press();
+    }
+  }
+  down.press = function() {
+    explorer.vy = 5;
+  }
+  down.release = function() {
+    if (up.isUp) {
+      explorer.vy = 0;
+    } else {
+      up.press();
+    }
+  }
+  left.press = function() {
+    explorer.vx = -5;
+  }
+  left.release = function() {
+    if (right.isUp) {
+      explorer.vx = 0;
+    } else {
+      right.press();
+    }
+  }
+  right.press = function() {
+    explorer.vx = 5;
+  }
+  right.release = function() {
+    if (left.isUp) {
+      explorer.vx = 0;
+    } else {
+      left.press();
+    }
+  }
+
+  state = play;
+
   gameLoop();
+
 }
 
 function gameLoop() {
   
   requestAnimationFrame(gameLoop);
 
-  explorer.x += 1;
-
-  if (explorer.x >= 500) {
-    explorer.x = 500;
-  }
+  state();
 
   renderer.render(stage);
+}
+
+function play() {
+  explorer.x += explorer.vx;
+  explorer.y += explorer.vy;
+  // if (explorer.x >= 500) {
+  //   explorer.x = 500;
+  // }
+}
+
+function keyboard(keyCode) {
+  var key = {};
+  key.code = keyCode;
+  key.isDown = false;
+  key.isUp = true;
+  key.press = undefined;
+  key.release = undefined;
+  //The `downHandler`
+  key.downHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isUp && key.press) key.press();
+      key.isDown = true;
+      key.isUp = false;
+
+    }
+    event.preventDefault();
+
+  };
+  //The `upHandler`
+  key.upHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isDown && key.release) key.release();
+      key.isDown = false;
+      key.isUp = true;
+
+    }
+    event.preventDefault();
+
+  };
+  //Attach event listeners
+  window.addEventListener(
+    "keydown", key.downHandler.bind(key), false
+
+  );
+  window.addEventListener(
+    "keyup", key.upHandler.bind(key), false
+
+  );
+  return key;
 }
